@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonateUA 💛 ЗСУ — Платформа</title>
+
+    <style>
+        :root {
+            --bg: #0b1a10;
+            --bg-light: #132a1b;
+            --card: #092212;
+            --stroke: rgba(212, 255, 0, 0.2);
+            --gold: #ffc400;
+            --gold-hover: #ffe600;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, var(--bg), #050d08);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+
+        header {
+            width: 100%;
+            background: #001400;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--stroke);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 24px;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        nav button:hover, nav button.active-nav {
+            color: var(--gold-hover);
+            text-shadow: 0 0 10px rgba(255, 196, 0, 0.4);
+        }
+
+
+        .slide {
+            display: none;
+            padding: 120px 8% 60px 8%;
+            min-height: 100vh;
+            animation: fade 0.5s ease forwards;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-text {
+            max-width: 650px;
+        }
+
+        .hero-text h1 {
+            font-size: 55px;
+            color: var(--gold-hover);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 22px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .hero img {
+            width: 380px;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid var(--gold);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+
+        .section-title {
+            text-align: center;
+            color: var(--gold);
+            font-size: 40px;
+            margin-bottom: 40px;
+        }
+
+        .story-desc {
+            text-align: center;
+            max-width: 800px;
+            margin: -20px auto 40px auto;
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.85;
+        }
+
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 2px solid var(--stroke);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.4s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            color: var(--gold);
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
+
+        .card-content p {
+            line-height: 1.6;
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+
+        .donate-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .quick-presets {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .preset-card {
+            background: var(--card);
+            border: 1px solid var(--stroke);
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .preset-card:hover {
+            border-color: var(--gold);
+        }
+
+        .preset-card h3 {
+            font-size: 20px;
+        }
+
+
+        .donate-box {
+            background: var(--card);
+            border: 2px solid var(--stroke);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .donate-box h3 {
+            margin-bottom: 15px;
+            color: var(--gold);
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid var(--stroke);
+            border-radius: 30px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            background: #06140b;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(255, 196, 0, 0.2);
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        button.btn-main {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(95deg, var(--gold), #b98b3d);
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button.btn-main:hover {
+            background: var(--gold-hover);
+            transform: scale(1.02);
+        }
+
+        .log-box {
+            margin-top: 15px;
+            min-height: 24px;
+            text-align: center;
+            font-weight: bold;
+            color: #5af07e;
+        }
+
+
+        .stats-wrapper {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid var(--stroke);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 45px;
+            color: var(--gold);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .final-box {
+            background: rgba(255,255,255,0.06);
+            padding: 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .final-box h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .final-box p {
+            font-size: 20px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background: #001400;
+            padding: 20px;
+            text-align: center;
+            color: var(--gold);
+            border-top: 2px solid var(--stroke);
+            font-size: 15px;
+        }
+
+
+        @media(max-width: 900px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+            nav button {
+                margin: 0 10px;
+                font-size: 14px;
+            }
+            .slide {
+                padding-top: 160px;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero img {
+                width: 260px;
+                height: 260px;
+            }
+            .hero-text h1 {
+                font-size: 38px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">DonateUA 💛 ЗСУ</div>
+        <nav>
+            <button id="nav-home" class="active-nav" onclick="go('home')">Головна</button>
+            <button id="nav-history" onclick="go('history')">Історія</button>
+            <button id="nav-donate" onclick="go('donate')">Донат</button>
+            <button id="nav-missions" onclick="go('missions')">Місії</button>
+            <button id="nav-stats" onclick="go('stats')">Фінал та статистика</button>
+        </nav>
+    </header>
+
+    <section id="home" class="slide active">
+        <div class="hero">
+            <div class="hero-text">
+                <h1>Разом до перемоги 🇺🇦</h1>
+                <p>
+                    Підтримка Збройних Сил України — це внесок у свободу, мир та майбутнє нашої країни. 
+                    Кожен ваш донат перетворюється на реальну допомогу захисникам на передовій.
+                </p>
+                <button class="btn-main" style="max-width: 250px; margin-top: 25px;" onclick="go('donate')">Підтримати зараз</button>
+            </div>
+            <img src="https://i.pinimg.com/736x/e5/ad/cd/e5adcdf684012834894d6edc1bb499eb.jpg" alt="ЗСУ">
+        </div>
+    </section>
+
+    <section id="history" class="slide">
+        <h2 class="section-title">📖 Історія нашої стійкості</h2>
+        <p class="story-desc">З початку повномасштабної війни українці об’єднались у безпрецедентний волонтерський рух. Маленьких донатів не існує — разом вони створюють надійний тил.</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <img src="https://i.pinimg.com/736x/36/96/f3/3696f3f900a54abfa49d6567eba47f0a.jpg" alt="Дрони">
+                <div class="card-content">
+                    <h3>Очі армії (Дрони)</h3>
+                    <p>Збори на квадрокоптери та FPV-дрони дозволяють нашим військовим проводити розвідку безпечно та ефективно ліквідувати загрози.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://i.pinimg.com/1200x/98/aa/2f/98aa2f5deec7abbbb3d6449e93dc375d.jpg" alt="Медицина">
+                <div class="card-content">
+                    <h3>Тактична медицина</h3>
+                    <p>Закупівля якісних турнікетів, аптечок та обладнання для польових шпиталів рятує тисячі життів на лінії фронту щодня.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://i.pinimg.com/1200x/68/e1/c9/68e1c974a4a566cc9cbb1deec379cdc8.jpg" alt="Гуманітарна допомога">
+                <div class="card-content">
+                    <h3>Гуманітарні місії</h3>
+                    <p>Доставка їжі, питної води, генераторів та необхідних речей у прифронтові регіони та деокуповані міста.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="donate" class="slide">
+        <h2 class="section-title">💳 Підтримати фінансово</h2>
+        
+        <div class="donate-container">
+            <div class="quick-presets">
+                <h3 style="color: var(--gold); margin-bottom: 10px;">Швидка підтримка:</h3>
+                <div class="preset-card">
+                    <div>
+                        <h4>Розвідка (Дрони)</h4>
+                        <p style="font-size:13px; opacity:0.7">Внесок на FPV-комплекти</p>
+                    </div>
+                    <button class="btn-main" style="width:auto; padding:10px 20px; margin:0;" onclick="quickDonate(200, 'на Дрони')">+200 ₴</button>
+                </div>
+                <div class="preset-card">
+                    <div>
+                        <h4>Такмед & Ліки</h4>
+                        <p style="font-size:13px; opacity:0.7">Кровоспинні та аптечки</p>
+                    </div>
+                    <button class="btn-main" style="width:auto; padding:10px 20px; margin:0;" onclick="quickDonate(150, 'на Медицину')">+150 ₴</button>
+                </div>
+                <div class="preset-card">
+                    <div>
+                        <h4>Логістика & Транспорт</h4>
+                        <p style="font-size:13px; opacity:0.7">Пальне та ремонт авто</p>
+                    </div>
+                    <button class="btn-main" style="width:auto; padding:10px 20px; margin:0;" onclick="quickDonate(300, 'на Транспорт')">+300 ₴</button>
+                </div>
+            </div>
+
+            <div class="donate-box">
+                <h3>Онлайн-оплата</h3>
+                
+                <input type="text" id="donor-name" placeholder="Ваше ім'я (або Анонімно)">
+                <input type="text" id="card-num" placeholder="Номер картки (0000 0000 0000 0000)">
+                
+                <div class="row">
+                    <input type="text" id="card-date" placeholder="ММ/РР">
+                    <input type="text" id="card-cvv" placeholder="CVV">
+                </div>
+                
+                <input type="number" id="custom-amount" placeholder="Сума донату (₴)">
+                
+                <button class="btn-main" onclick="processCustomDonate()">Оплатити донат</button>
+                <div id="donate-log" class="log-box"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="missions" class="slide">
+        <h2 class="section-title">🎯 Наші поточні місії</h2>
+        <p class="story-desc">Напрямки розподілу коштів, які є критично важливими прямо зараз. Ваша допомога розподіляється за прозорими пріоблемами.</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <img src="https://i1-c.pinimg.com/1200x/3b/eb/62/3beb62533a4bc078d86f007ec1c35416.jpg" alt="Авто">
+                <div class="card-content">
+                    <h3>Авто для ЗСУ</h3>
+                    <p>Позашляховики та буси високої прохідності для евакуації та переміщення особового складу.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1200&auto=format&fit=crop" alt="Продовольство">
+                <div class="card-content">
+                    <h3>Якісне харчування</h3>
+                    <p>Забезпечення сухпайками, енергетичними наборами та гарячою їжею на складних лініях оборони.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop" alt="Енергія">
+                <div class="card-content">
+                    <h3>Енергетична незалежність</h3>
+                    <p>Портативні зарядні станції, генератори та екофлоу для безперебійного зв’язку та роботи командних пунктів.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="slide">
+        <h2 class="section-title">📊 Результати збору в реальному часі</h2>
+        
+        <div class="stats-wrapper">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div id="total-amount" class="stat-value">0 ₴</div>
+                    <p>Загалом зібрано коштів</p>
+                </div>
+                <div class="stat-card">
+                    <div id="total-count" class="stat-value">0</div>
+                    <p>Здійснено транзакцій</p>
+                </div>
+            </div>
+
+            <div class="final-box">
+                <h2>💛 Висновок та подяка</h2>
+                <p>
+                    Україна тримається завдяки людям, які підтримують армію та допомагають одне одному. 
+                    Навіть маленький донат є вагомим внеском, що рятує життя.
+                </p>
+                <p style="color: var(--gold); font-weight: bold; font-size: 24px;">Ваша підтримка наближає нашу спільну Перемогу!</p>
+                <p>Слава Україні! 🇺🇦</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        DonateUA 💛 ЗСУ | Слава Україні 🇺🇦 | Разом до перемоги
+    </footer>
+
+    <script>
+
+        let totalSum = 0;
+        let donationCount = 0;
+
+
+        function go(slideId) {
+
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+
+
+            const targetSlide = document.getElementById(slideId);
+            if (targetSlide) {
+                targetSlide.classList.add('active');
+            }
+
+
+            const navButtons = document.querySelectorAll('nav button');
+            navButtons.forEach(btn => btn.classList.remove('active-nav'));
+            
+            const currentActiveBtn = document.getElementById(`nav-${slideId}`);
+            if (currentActiveBtn) {
+                currentActiveBtn.classList.add('active-nav');
+            }
+
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+
+        function updateStatsUI() {
+            document.getElementById('total-amount').innerText = totalSum + " ₴";
+            document.getElementById('total-count').innerText = donationCount;
+        }
+
+
+        function quickDonate(amount, targetName) {
+            totalSum += amount;
+            donationCount++;
+            
+            updateStatsUI();
+
+
+            const logElement = document.getElementById('donate-log');
+            logElement.style.color = '#5af07e';
+            logElement.innerText = `❤️ Анонімний внесок ${amount} ₴ ${targetName} успішно зараховано!`;
+        }
+
+
+        function processCustomDonate() {
+            let nameInput = document.getElementById('donor-name').value.trim();
+            let amountInput = document.getElementById('custom-amount').value;
+            let cardNum = document.getElementById('card-num').value.trim();
+
+            let name = nameInput ? nameInput : "Анонімний доброчинець";
+            let amount = parseInt(amountInput);
+
+            const logElement = document.getElementById('donate-log');
+
+
+            if (!amount || amount <= 0) {
+                logElement.style.color = '#ff6b6b';
+                logElement.innerText = "❌ Будь ласка, вкажіть коректну суму донату!";
+                return;
+            }
+
+
+            totalSum += amount;
+            donationCount++;
+
+            updateStatsUI();
+
+
+            logElement.style.color = '#5af07e';
+            logElement.innerText = `🎉 Дякуємо, ${name}! Ваш донат на суму ${amount} ₴ успішно прийнято!`;
+
+
+            document.getElementById('custom-amount').value = '';
+            document.getElementById('card-num').value = '';
+            document.getElementById('card-date').value = '';
+            document.getElementById('card-cvv').value = '';
+        }
+    </script>
+</body>
+</html>
